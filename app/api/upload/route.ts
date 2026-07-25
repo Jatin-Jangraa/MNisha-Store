@@ -6,6 +6,7 @@ import type { Category, GalleryItem } from "@/types/gallery";
 import { ALL_CATEGORIES } from "@/types/gallery";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
   try {
