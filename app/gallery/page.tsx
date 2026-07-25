@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { MasonryGallery } from "@/components/gallery/masonry-gallery";
 import { galleryItems } from "@/data/gallery";
-import { getUploadedItems } from "@/lib/uploads";
+import { listImages } from "@/lib/cloudinary";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 async function getAllItems() {
   try {
-    const uploaded = await getUploadedItems();
+    const uploaded = await listImages();
     return [...galleryItems, ...uploaded];
   } catch {
     return galleryItems;

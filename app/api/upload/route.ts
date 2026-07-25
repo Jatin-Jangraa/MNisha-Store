@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { addUploadedItem } from "@/lib/uploads";
-import { slugify } from "@/lib/utils";
-import type { GalleryItem } from "@/types/gallery";
+import { cloudinary } from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -18,8 +16,6 @@ export async function POST(request: NextRequest) {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-
-    const cloudinary = (await import("@/lib/cloudinary")).cloudinary;
 
     const result = await new Promise<{
       public_id: string;
@@ -45,19 +41,16 @@ export async function POST(request: NextRequest) {
       uploadStream.end(buffer);
     });
 
-    const id = slugify(file.name.replace(/\.[^.]+$/, "")) + "-" + Date.now();
+    const id = result.public_id.replace("mnisha-gallery/", "");
 
-    const newItem: GalleryItem = {
+    const item = {
       id,
       image: result.secure_url,
       height: Math.min(Math.max(Math.round((result.height / result.width) * 500), 400), 800),
-      uploaded: true,
       cloudinaryPublicId: result.public_id
     };
 
-    await addUploadedItem(newItem);
-
-    return NextResponse.json({ success: true, item: newItem }, { status: 201 });
+    return NextResponse.json({ success: true, item }, { status: 201 });
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json(

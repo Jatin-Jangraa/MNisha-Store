@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { galleryItems, getGalleryItem } from "@/data/gallery";
-import { getUploadedItems, getUploadedItem } from "@/lib/uploads";
+import { getImage, listImages } from "@/lib/cloudinary";
 import type { GalleryItem } from "@/types/gallery";
 
 type Params = {
@@ -16,7 +16,8 @@ async function findItem(id: string): Promise<GalleryItem | undefined> {
   if (staticItem) return staticItem;
 
   try {
-    return await getUploadedItem(id);
+    const item = await getImage(id);
+    return item || undefined;
   } catch {
     return undefined;
   }
@@ -50,7 +51,7 @@ export default async function GalleryDetailPage({ params }: Params) {
 
   let allItems: GalleryItem[] = [];
   try {
-    const uploaded = await getUploadedItems();
+    const uploaded = await listImages();
     allItems = [...galleryItems, ...uploaded];
   } catch {
     allItems = galleryItems;

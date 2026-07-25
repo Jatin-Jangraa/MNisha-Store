@@ -7,12 +7,12 @@ import { ImageMarquee } from "@/components/image-marquee";
 import { LoadingScreen } from "@/components/loading-screen";
 import { SectionReveal } from "@/components/section-reveal";
 import { galleryItems } from "@/data/gallery";
-import { getUploadedItems } from "@/lib/uploads";
+import { listImages } from "@/lib/cloudinary";
 import type { GalleryItem } from "@/types/gallery";
 
 async function getAllItems(): Promise<GalleryItem[]> {
   try {
-    const uploaded = await getUploadedItems();
+    const uploaded = await listImages();
     return [...galleryItems, ...uploaded];
   } catch {
     return galleryItems;
