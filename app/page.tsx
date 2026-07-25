@@ -15,14 +15,28 @@ export const runtime = "nodejs";
 async function getAllItems(): Promise<GalleryItem[]> {
   try {
     const uploaded = await listImages();
-    return [...galleryItems, ...uploaded];
+    return [...uploaded, ...galleryItems];
   } catch {
     return galleryItems;
   }
 }
 
+function pick(items: GalleryItem[], ...indices: number[]) {
+  return indices.map((i) => items[i % items.length]);
+}
+
 export default async function HomePage() {
   const allItems = await getAllItems();
+
+  const showcase1 = allItems[2] ?? allItems[0];
+  const grid3 = pick(allItems, 0, 4, 5);
+  const showcase2 = allItems[6] ?? allItems[1];
+  const grid2 = pick(allItems, 7, 8);
+  const grid4 = pick(allItems, 9, 10, 11, 12);
+  const showcase3 = allItems[13] ?? allItems[3];
+  const reverseMarquee = [...allItems.slice(8, 16), ...allItems.slice(8, 16)];
+  const forwardMarquee = [...allItems.slice(0, 8), ...allItems.slice(0, 8)];
+  const finalCta = allItems[15] ?? allItems[allItems.length - 1];
 
   return (
     <main>
@@ -35,7 +49,7 @@ export default async function HomePage() {
       <section id="showcase" className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
-            src={allItems[2].image}
+            src={showcase1.image}
             alt=""
             fill
             priority
@@ -47,7 +61,7 @@ export default async function HomePage() {
 
       {/* 3-image grid */}
       <section className="grid grid-cols-3 gap-1">
-        {[allItems[0], allItems[4], allItems[5]].map((item, i) => (
+        {grid3.map((item, i) => (
           <SectionReveal key={item.id} delay={i * 0.08}>
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
@@ -66,7 +80,7 @@ export default async function HomePage() {
       <section className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
-            src={allItems[6].image}
+            src={showcase2.image}
             alt=""
             fill
             sizes="100vw"
@@ -77,7 +91,7 @@ export default async function HomePage() {
 
       {/* 2-image grid */}
       <section className="grid grid-cols-2 gap-1">
-        {[allItems[7], allItems[8]].map((item, i) => (
+        {grid2.map((item, i) => (
           <SectionReveal key={item.id} delay={i * 0.08}>
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
@@ -113,7 +127,7 @@ export default async function HomePage() {
 
       {/* 4-image grid */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-1">
-        {[allItems[9], allItems[10], allItems[11], allItems[12]].map((item, i) => (
+        {grid4.map((item, i) => (
           <SectionReveal key={item.id} delay={i * 0.06}>
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
@@ -132,7 +146,7 @@ export default async function HomePage() {
       <section className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
-            src={allItems[13].image}
+            src={showcase3.image}
             alt=""
             fill
             sizes="100vw"
@@ -144,7 +158,7 @@ export default async function HomePage() {
       {/* Reverse image marquee */}
       <div className="overflow-hidden py-4">
         <div className="flex w-max animate-marquee-reverse gap-4">
-          {[...allItems.slice(8, 16), ...allItems.slice(8, 16)].map((item, index) => (
+          {reverseMarquee.map((item, index) => (
             <div
               key={`${item.id}-rev-${index}`}
               className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl md:h-32 md:w-48"
@@ -161,10 +175,10 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Reverse image marquee */}
+      {/* Forward image marquee */}
       <div className="overflow-hidden py-4">
         <div className="flex w-max animate-marquee gap-4">
-          {[...allItems.slice(0, 8), ...allItems.slice(0, 8)].map((item, index) => (
+          {forwardMarquee.map((item, index) => (
             <div
               key={`${item.id}-fwd-${index}`}
               className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl md:h-32 md:w-48"
@@ -184,7 +198,7 @@ export default async function HomePage() {
       {/* Final CTA */}
       <section className="relative h-[70vh] md:h-[85vh]">
         <Image
-          src={allItems[15].image}
+          src={finalCta.image}
           alt=""
           fill
           sizes="100vw"
