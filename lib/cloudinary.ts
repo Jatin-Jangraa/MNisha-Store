@@ -12,23 +12,32 @@ export { cloudinary };
 const FOLDER = "mnisha-gallery";
 
 export async function listImages(maxResults = 500) {
-  const result = await cloudinary.api.resources({
-    type: "upload",
-    prefix: `${FOLDER}/`,
-    max_results: maxResults
-  });
+  try {
+    const result = await cloudinary.api.resources({
+      type: "upload",
+      prefix: `${FOLDER}/`,
+      max_results: maxResults
+    });
 
-  return result.resources.map((resource: Record<string, unknown>) => ({
-    id: (resource.public_id as string).replace(`${FOLDER}/`, ""),
-    image: resource.secure_url as string,
-    height: Math.min(Math.max(Math.round(((resource.height as number) / (resource.width as number)) * 500), 400), 800),
-    cloudinaryPublicId: resource.public_id as string
-  }));
+    if (!result.resources || result.resources.length === 0) {
+      return [];
+    }
+
+    return result.resources.map((resource: Record<string, unknown>) => ({
+      id: (resource.public_id as string).replace(`${FOLDER}/`, ""),
+      image: resource.secure_url as string,
+      height: Math.min(Math.max(Math.round(((resource.height as number) / (resource.width as number)) * 500), 400), 800),
+      cloudinaryPublicId: resource.public_id as string
+    }));
+  } catch (error) {
+    console.error("Cloudinary listImages error:", error);
+    return [];
+  }
 }
 
 export async function getImage(publicId: string) {
-  const fullId = `${FOLDER}/${publicId}`;
   try {
+    const fullId = `${FOLDER}/${publicId}`;
     const result = await cloudinary.api.resource(fullId);
     return {
       id: publicId,
