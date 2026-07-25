@@ -7,6 +7,8 @@ import { galleryItems, getGalleryItem } from "@/data/gallery";
 import { getImage, listImages } from "@/lib/cloudinary";
 import type { GalleryItem } from "@/types/gallery";
 
+export const runtime = "nodejs";
+
 type Params = {
   params: Promise<{ id: string }>;
 };

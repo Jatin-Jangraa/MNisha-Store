@@ -10,6 +10,8 @@ import { galleryItems } from "@/data/gallery";
 import { listImages } from "@/lib/cloudinary";
 import type { GalleryItem } from "@/types/gallery";
 
+export const runtime = "nodejs";
+
 async function getAllItems(): Promise<GalleryItem[]> {
   try {
     const uploaded = await listImages();

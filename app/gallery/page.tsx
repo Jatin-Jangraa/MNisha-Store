@@ -4,6 +4,8 @@ import { MasonryGallery } from "@/components/gallery/masonry-gallery";
 import { galleryItems } from "@/data/gallery";
 import { listImages } from "@/lib/cloudinary";
 
+export const runtime = "nodejs";
+
 export const metadata: Metadata = {
   title: "Gallery",
   description: "Explore a premium masonry gallery of designer clothing collections."
