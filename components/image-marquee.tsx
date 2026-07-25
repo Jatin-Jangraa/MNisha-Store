@@ -4,6 +4,8 @@ import Image from "next/image";
 import type { GalleryItem } from "@/types/gallery";
 
 export function ImageMarquee({ items }: { items: GalleryItem[] }) {
+  if (items.length === 0) return null;
+
   const images = items.slice(0, 8);
   const doubled = [...images, ...images];
 

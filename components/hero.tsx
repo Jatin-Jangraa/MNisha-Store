@@ -12,6 +12,7 @@ export function Hero({ items }: { items: GalleryItem[] }) {
   const allImages = items.slice(0, 8);
 
   useEffect(() => {
+    if (!heroRef.current) return;
     let context: gsap.Context | undefined;
 
     const load = async () => {
@@ -53,15 +54,19 @@ export function Hero({ items }: { items: GalleryItem[] }) {
     <section ref={heroRef} className="relative h-screen overflow-hidden">
       {/* Full-bleed background image */}
       <div className="absolute inset-0">
-        <Image
-          src={allImages[0].image}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-          data-hero-bg
-        />
+        {allImages.length > 0 ? (
+          <Image
+            src={allImages[0].image}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            data-hero-bg
+          />
+        ) : (
+          <div className="absolute inset-0 bg-luxury-ink" data-hero-bg />
+        )}
         <div
           data-hero-overlay
           className="absolute inset-0 bg-black/0"
