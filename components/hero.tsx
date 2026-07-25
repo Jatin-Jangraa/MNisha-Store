@@ -55,7 +55,7 @@ export function Hero({ items }: { items: GalleryItem[] }) {
       <div className="absolute inset-0">
         <Image
           src={allImages[0].image}
-          alt={allImages[0].alt}
+          alt=""
           fill
           priority
           sizes="100vw"

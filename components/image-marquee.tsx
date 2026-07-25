@@ -17,7 +17,7 @@ export function ImageMarquee({ items }: { items: GalleryItem[] }) {
           >
             <Image
               src={item.image}
-              alt={item.alt}
+              alt=""
               fill
               sizes="192px"
               className="object-cover"

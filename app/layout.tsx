@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 
 import { Footer } from "@/components/footer";
-import { LuxuryCursor } from "@/components/luxury-cursor";
 import { Navbar } from "@/components/navbar";
 import { ProtectImages } from "@/components/protect-images";
 import { Providers } from "@/components/providers";
@@ -69,7 +68,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Providers>
           <SmoothScroll />
           <ScrollProgress />
-          <LuxuryCursor />
           <ProtectImages />
           <Navbar />
           {children}

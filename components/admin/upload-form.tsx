@@ -5,8 +5,6 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ALL_CATEGORIES } from "@/types/gallery";
 
 export function UploadForm({ onUpload }: { onUpload: () => void }) {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -15,16 +13,6 @@ export function UploadForm({ onUpload }: { onUpload: () => void }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-
-  const [designer, setDesigner] = useState("");
-  const [collection, setCollection] = useState("");
-  const [category, setCategory] = useState("");
-  const [year, setYear] = useState(new Date().getFullYear().toString());
-  const [alt, setAlt] = useState("");
-  const [description, setDescription] = useState("");
-  const [materials, setMaterials] = useState("");
-  const [colors, setColors] = useState("");
-  const [palette, setPalette] = useState("");
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = e.target.files?.[0];
@@ -85,18 +73,6 @@ export function UploadForm({ onUpload }: { onUpload: () => void }) {
       setError("Please select an image");
       return;
     }
-    if (!designer.trim()) {
-      setError("Designer name is required");
-      return;
-    }
-    if (!collection.trim()) {
-      setError("Collection name is required");
-      return;
-    }
-    if (!category) {
-      setError("Please select a category");
-      return;
-    }
 
     setUploading(true);
     setError(null);
@@ -104,15 +80,6 @@ export function UploadForm({ onUpload }: { onUpload: () => void }) {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("designer", designer.trim());
-      formData.append("collection", collection.trim());
-      formData.append("category", category);
-      formData.append("year", year);
-      formData.append("alt", alt.trim());
-      formData.append("description", description.trim());
-      formData.append("materials", materials);
-      formData.append("colors", colors);
-      formData.append("palette", palette);
 
       const response = await fetch("/api/upload", {
         method: "POST",
@@ -127,27 +94,12 @@ export function UploadForm({ onUpload }: { onUpload: () => void }) {
 
       setSuccess(true);
       onUpload();
-      clearForm();
+      clearFile();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
     } finally {
       setUploading(false);
     }
-  }
-
-  function clearForm() {
-    setFile(null);
-    setPreview(null);
-    setDesigner("");
-    setCollection("");
-    setCategory("");
-    setYear(new Date().getFullYear().toString());
-    setAlt("");
-    setDescription("");
-    setMaterials("");
-    setColors("");
-    setPalette("");
-    if (fileRef.current) fileRef.current.value = "";
   }
 
   return (
@@ -208,114 +160,6 @@ export function UploadForm({ onUpload }: { onUpload: () => void }) {
         )}
       </div>
 
-      <div className="grid gap-3.5 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-            Designer *
-          </label>
-          <Input
-            value={designer}
-            onChange={(e) => setDesigner(e.target.value)}
-            placeholder="e.g. Amara Valen"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-            Collection *
-          </label>
-          <Input
-            value={collection}
-            onChange={(e) => setCollection(e.target.value)}
-            placeholder="e.g. Golden Hour Atelier"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-            Category *
-          </label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="flex h-12 w-full rounded-full border border-border/80 bg-background/90 px-5 text-sm shadow-soft outline-none backdrop-blur-sm transition-all duration-500 placeholder:text-muted-foreground/40 focus:border-luxury-gold focus:ring-4 focus:ring-luxury-gold/8"
-          >
-            <option value="">Select category</option>
-            {ALL_CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-            Year
-          </label>
-          <Input
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            placeholder="2026"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-          Alt Text
-        </label>
-        <Input
-          value={alt}
-          onChange={(e) => setAlt(e.target.value)}
-          placeholder="Describe the image for accessibility"
-        />
-      </div>
-
-      <div>
-        <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-          Description
-        </label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="A brief description of this design..."
-          rows={3}
-          className="flex w-full rounded-2xl border border-border/80 bg-background/90 px-4 py-3 text-sm shadow-soft outline-none backdrop-blur-sm transition-all duration-500 placeholder:text-muted-foreground/35 focus:border-luxury-gold focus:ring-4 focus:ring-luxury-gold/8"
-        />
-      </div>
-
-      <div className="grid gap-3.5 sm:grid-cols-2">
-        <div>
-          <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-            Materials (comma separated)
-          </label>
-          <Input
-            value={materials}
-            onChange={(e) => setMaterials(e.target.value)}
-            placeholder="e.g. Silk, Cotton, Wool"
-          />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-            Colors (comma separated)
-          </label>
-          <Input
-            value={colors}
-            onChange={(e) => setColors(e.target.value)}
-            placeholder="e.g. Black, Gold, Ivory"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/50">
-          Color Palette (comma separated hex codes)
-        </label>
-        <Input
-          value={palette}
-          onChange={(e) => setPalette(e.target.value)}
-          placeholder="e.g. #B8860B, #111111, #F8F8F8, #FFFFFF"
-        />
-      </div>
-
       {error && (
         <div className="rounded-xl border border-red-500/10 bg-red-500/5 px-4 py-3 text-sm text-red-500">
           {error}
@@ -328,14 +172,14 @@ export function UploadForm({ onUpload }: { onUpload: () => void }) {
         </div>
       )}
 
-      <Button type="submit" variant="gold" size="lg" disabled={uploading} className="w-full">
+      <Button type="submit" variant="gold" size="lg" disabled={uploading || !file} className="w-full">
         {uploading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Uploading to Cloudinary...
           </>
         ) : (
-          "Upload Design"
+          "Upload Image"
         )}
       </Button>
     </form>

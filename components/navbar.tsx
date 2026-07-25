@@ -1,16 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/constants/site";
 import { cn } from "@/lib/utils";
+
+const navItems = [
+  { href: "/gallery", label: "Gallery" },
+  { href: "/collections", label: "Collections" },
+  { href: "/designers", label: "Designers" },
+  { href: "/admin", label: "Admin" }
+];
 
 export function Navbar() {
   const pathname = usePathname();
@@ -32,9 +37,7 @@ export function Navbar() {
         transition={{ duration: 0.8, delay: 2, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           "fixed left-0 top-0 z-50 w-full transition-all duration-700",
-          scrolled
-            ? "py-3"
-            : "py-5"
+          scrolled ? "py-3" : "py-5"
         )}
       >
         <div className={cn(
@@ -64,7 +67,7 @@ export function Navbar() {
             </Link>
 
             <div className="hidden items-center gap-1 lg:flex">
-              {siteConfig.nav.map((item) => (
+              {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -86,26 +89,6 @@ export function Navbar() {
                   />
                 </Link>
               ))}
-              <Link
-                href="/admin"
-                className={cn(
-                  "group relative rounded-full px-4 py-2 text-[12px] font-medium uppercase tracking-[0.14em] transition-all duration-400",
-                  pathname === "/admin"
-                    ? "text-luxury-gold bg-luxury-gold/5"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                )}
-              >
-                Admin
-              </Link>
-            </div>
-
-            <div className="hidden items-center gap-2 lg:flex">
-              <Button asChild size="icon-sm" variant="ghost" aria-label="Search gallery">
-                <Link href="/gallery#search">
-                  <Search className="h-4 w-4" />
-                </Link>
-              </Button>
-              <ThemeToggle />
             </div>
 
             <button
@@ -129,7 +112,7 @@ export function Navbar() {
         className="fixed left-0 right-0 top-[76px] z-40 overflow-hidden border-t border-border/30 bg-background/95 backdrop-blur-2xl lg:hidden"
       >
         <div className="container flex flex-col gap-1 py-4">
-          {siteConfig.nav.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -144,24 +127,6 @@ export function Navbar() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/admin"
-            className={cn(
-              "rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300",
-              pathname === "/admin"
-                ? "bg-luxury-gold/5 text-luxury-gold"
-                : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-            )}
-            onClick={() => setOpen(false)}
-          >
-            Admin
-          </Link>
-          <div className="flex gap-2 px-4 pt-3">
-            <Button asChild variant="outline" size="sm">
-              <Link href="/gallery#search">Search</Link>
-            </Button>
-            <ThemeToggle />
-          </div>
         </div>
       </motion.div>
     </>

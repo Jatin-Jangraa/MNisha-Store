@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import type { GalleryItem } from "@/types/gallery";
 
 export function UploadedItemsList({ refreshKey }: { refreshKey: number }) {
@@ -29,7 +28,7 @@ export function UploadedItemsList({ refreshKey }: { refreshKey: number }) {
   }, [refreshKey]);
 
   async function handleDelete(id: string) {
-    if (!confirm("Delete this image? This cannot be undone.")) return;
+    if (!confirm("Delete this image?")) return;
 
     setDeleting(id);
     try {
@@ -70,19 +69,14 @@ export function UploadedItemsList({ refreshKey }: { refreshKey: number }) {
           <div className="relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-xl">
             <Image
               src={item.image}
-              alt={item.alt}
+              alt=""
               fill
               sizes="72px"
               className="object-cover"
             />
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="truncate font-serif text-lg">{item.collection}</h3>
-            <p className="text-sm text-muted-foreground/50">{item.designer}</p>
-            <div className="mt-1.5 flex items-center gap-2">
-              <Badge>{item.category}</Badge>
-              <span className="text-[10px] text-muted-foreground/35">{item.year}</span>
-            </div>
+            <p className="truncate text-sm text-muted-foreground/50">{item.id}</p>
           </div>
           <Button
             variant="ghost"

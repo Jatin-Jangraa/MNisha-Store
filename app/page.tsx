@@ -6,7 +6,7 @@ import { Hero } from "@/components/hero";
 import { ImageMarquee } from "@/components/image-marquee";
 import { LoadingScreen } from "@/components/loading-screen";
 import { SectionReveal } from "@/components/section-reveal";
-import { collections, galleryItems } from "@/data/gallery";
+import { galleryItems } from "@/data/gallery";
 import { getUploadedItems } from "@/lib/uploads";
 import type { GalleryItem } from "@/types/gallery";
 
@@ -29,32 +29,17 @@ export default async function HomePage() {
 
       <ImageMarquee items={allItems} />
 
-      {/* Full-bleed editorial */}
+      {/* Full-bleed image */}
       <section id="showcase" className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
             src={allItems[2].image}
-            alt={allItems[2].alt}
+            alt=""
             fill
             priority
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
-            <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-luxury-gold-lighter">
-              {allItems[2].category}
-            </p>
-            <h2 className="mt-3 font-serif text-4xl text-white md:text-6xl">
-              {allItems[2].collection}
-            </h2>
-            <Link
-              href={`/gallery/${allItems[2].id}`}
-              className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-luxury-gold-lighter"
-            >
-              View <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
         </SectionReveal>
       </section>
 
@@ -65,42 +50,26 @@ export default async function HomePage() {
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
                 src={item.image}
-                alt={item.alt}
+                alt=""
                 fill
                 sizes="33vw"
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             </Link>
           </SectionReveal>
         ))}
       </section>
 
-      {/* Full-bleed editorial */}
+      {/* Full-bleed image */}
       <section className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
             src={allItems[6].image}
-            alt={allItems[6].alt}
+            alt=""
             fill
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
-            <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-luxury-gold-lighter">
-              {allItems[6].category}
-            </p>
-            <h2 className="mt-3 font-serif text-4xl text-white md:text-6xl">
-              {allItems[6].collection}
-            </h2>
-            <Link
-              href={`/gallery/${allItems[6].id}`}
-              className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-luxury-gold-lighter"
-            >
-              View <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
         </SectionReveal>
       </section>
 
@@ -111,12 +80,11 @@ export default async function HomePage() {
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
                 src={item.image}
-                alt={item.alt}
+                alt=""
                 fill
                 sizes="50vw"
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             </Link>
           </SectionReveal>
         ))}
@@ -148,7 +116,7 @@ export default async function HomePage() {
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
                 src={item.image}
-                alt={item.alt}
+                alt=""
                 fill
                 sizes="25vw"
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
@@ -158,31 +126,16 @@ export default async function HomePage() {
         ))}
       </section>
 
-      {/* Full-bleed editorial */}
+      {/* Full-bleed image */}
       <section className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
             src={allItems[13].image}
-            alt={allItems[13].alt}
+            alt=""
             fill
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
-            <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-luxury-gold-lighter">
-              {allItems[13].category}
-            </p>
-            <h2 className="mt-3 font-serif text-4xl text-white md:text-6xl">
-              {allItems[13].collection}
-            </h2>
-            <Link
-              href={`/gallery/${allItems[13].id}`}
-              className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-luxury-gold-lighter"
-            >
-              View <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
         </SectionReveal>
       </section>
 
@@ -196,7 +149,7 @@ export default async function HomePage() {
             >
               <Image
                 src={item.image}
-                alt={item.alt}
+                alt=""
                 fill
                 sizes="192px"
                 className="object-cover"
@@ -206,75 +159,31 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Collection cards */}
-      <section className="px-4 py-16 md:px-8 md:py-28">
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
-          {collections.map((collection, i) => (
-            <SectionReveal key={collection.id} delay={i * 0.05}>
-              <Link
-                href="/collections"
-                className="group relative block aspect-[3/4] overflow-hidden rounded-xl md:rounded-2xl"
-              >
-                <Image
-                  src={collection.image}
-                  alt={collection.title}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 16vw"
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full transition-transform duration-500 group-hover:translate-y-0 md:p-4">
-                  <p className="text-[8px] uppercase tracking-[0.2em] text-luxury-gold-lighter md:text-[9px]">
-                    {collection.season}
-                  </p>
-                  <p className="mt-0.5 font-serif text-sm text-white md:text-base">{collection.title}</p>
-                </div>
-              </Link>
-            </SectionReveal>
+      {/* Reverse image marquee */}
+      <div className="overflow-hidden py-4">
+        <div className="flex w-max animate-marquee gap-4">
+          {[...allItems.slice(0, 8), ...allItems.slice(0, 8)].map((item, index) => (
+            <div
+              key={`${item.id}-fwd-${index}`}
+              className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl md:h-32 md:w-48"
+            >
+              <Image
+                src={item.image}
+                alt=""
+                fill
+                sizes="192px"
+                className="object-cover"
+              />
+            </div>
           ))}
         </div>
-      </section>
-
-      {/* Designer portraits */}
-      <section className="relative bg-secondary/30 py-16 md:py-24">
-        <div className="container">
-          <SectionReveal>
-            <div className="flex items-center gap-4 mb-10 md:mb-14">
-              <div className="h-px w-8 bg-luxury-gold" />
-              <p className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground/50">Designers</p>
-            </div>
-          </SectionReveal>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-            {[allItems[0], allItems[1], allItems[4], allItems[14]].map((item, i) => (
-              <SectionReveal key={item.id} delay={i * 0.08}>
-                <Link
-                  href={`/gallery/${item.id}`}
-                  className="group relative block aspect-[3/4] overflow-hidden rounded-xl md:rounded-2xl"
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.alt}
-                    fill
-                    sizes="25vw"
-                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                    <p className="text-[9px] uppercase tracking-[0.25em] text-luxury-gold-lighter">{item.designer}</p>
-                    <p className="mt-1 font-serif text-lg text-white md:text-xl">{item.collection}</p>
-                  </div>
-                </Link>
-              </SectionReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Final CTA */}
       <section className="relative h-[70vh] md:h-[85vh]">
         <Image
           src={allItems[15].image}
-          alt={allItems[15].alt}
+          alt=""
           fill
           sizes="100vw"
           className="object-cover"

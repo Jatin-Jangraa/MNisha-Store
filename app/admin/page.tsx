@@ -27,16 +27,13 @@ export default function AdminPage() {
     <main className="pt-24">
       <section className="relative bg-background py-12 md:py-20">
         <div className="absolute inset-0 noise pointer-events-none opacity-20" />
-        <div className="container relative max-w-6xl">
+        <div className="container relative max-w-4xl">
           <div className="flex items-start justify-between">
             <div>
               <Badge variant="gold">Admin</Badge>
               <h1 className="mt-5 font-serif text-5xl leading-tight md:text-7xl">
-                Manage Gallery
+                Upload Images
               </h1>
-              <p className="mt-4 max-w-2xl text-[15px] text-muted-foreground">
-                Upload new designer images to Cloudinary and manage your gallery collection.
-              </p>
             </div>
             <Button
               variant="outline"
@@ -52,9 +49,6 @@ export default function AdminPage() {
           <div className="mt-14 grid gap-10 lg:grid-cols-2">
             <div>
               <h2 className="font-serif text-2xl">Upload New Image</h2>
-              <p className="mt-2 text-sm text-muted-foreground/50">
-                Images are uploaded to Cloudinary and stored in the gallery.
-              </p>
               <div className="mt-6">
                 <UploadForm onUpload={handleUpload} />
               </div>
@@ -62,9 +56,6 @@ export default function AdminPage() {
 
             <div>
               <h2 className="font-serif text-2xl">Uploaded Images</h2>
-              <p className="mt-2 text-sm text-muted-foreground/50">
-                Manage images that have been uploaded to the gallery.
-              </p>
               <div className="mt-6">
                 <UploadedItemsList refreshKey={refreshKey} />
               </div>

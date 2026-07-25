@@ -53,7 +53,6 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    cursor: none;
     font-feature-settings: "cv11", "ss01", "ss03";
   }
 
