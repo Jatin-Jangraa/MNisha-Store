@@ -4,6 +4,7 @@ import { MasonryGallery } from "@/components/gallery/masonry-gallery";
 import { listImages } from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Gallery",

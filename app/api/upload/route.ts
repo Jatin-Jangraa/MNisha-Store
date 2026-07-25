@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 import { cloudinary } from "@/lib/cloudinary";
@@ -49,6 +50,9 @@ export async function POST(request: NextRequest) {
       height: Math.min(Math.max(Math.round((result.height / result.width) * 500), 400), 800),
       cloudinaryPublicId: result.public_id
     };
+
+    revalidatePath("/");
+    revalidatePath("/gallery");
 
     return NextResponse.json({ success: true, item }, { status: 201 });
   } catch (error) {

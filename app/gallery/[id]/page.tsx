@@ -7,6 +7,7 @@ import { getImage, listImages } from "@/lib/cloudinary";
 import type { GalleryItem } from "@/types/gallery";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 type Params = {
   params: Promise<{ id: string }>;

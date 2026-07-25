@@ -10,6 +10,7 @@ import { listImages } from "@/lib/cloudinary";
 import type { GalleryItem } from "@/types/gallery";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 async function getAllItems(): Promise<GalleryItem[]> {
   try {

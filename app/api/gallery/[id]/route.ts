@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 import { deleteImage } from "@/lib/cloudinary";
@@ -11,6 +12,8 @@ export async function DELETE(
   try {
     const { id } = await params;
     await deleteImage(id);
+    revalidatePath("/");
+    revalidatePath("/gallery");
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Delete error:", error);
