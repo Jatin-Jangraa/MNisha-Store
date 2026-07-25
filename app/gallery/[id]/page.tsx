@@ -166,7 +166,7 @@ export default async function GalleryDetailPage({ params }: Params) {
         </div>
       </section>
 
-      <MasonryGallery compact />
+      <MasonryGallery compact initialItems={allItems} />
     </main>
   );
 }

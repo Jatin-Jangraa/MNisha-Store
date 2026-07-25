@@ -4,34 +4,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Heart, Search, SlidersHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Lightbox } from "@/components/gallery/lightbox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { categories, galleryItems } from "@/data/gallery";
+import { categories } from "@/data/gallery";
 import { cn } from "@/lib/utils";
 import type { GalleryItem } from "@/types/gallery";
 
-export function MasonryGallery({ compact = false }: { compact?: boolean }) {
-  const [allItems, setAllItems] = useState<GalleryItem[]>(galleryItems);
+export function MasonryGallery({ compact = false, initialItems }: { compact?: boolean; initialItems: GalleryItem[] }) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(compact ? 8 : 18);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  useEffect(() => {
-    fetch("/api/gallery")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.items && data.items.length > 0) {
-          setAllItems([...galleryItems, ...data.items]);
-        }
-      })
-      .catch(() => {});
-  }, []);
+  const allItems = initialItems;
 
   const repeatedItems = useMemo(
     () =>

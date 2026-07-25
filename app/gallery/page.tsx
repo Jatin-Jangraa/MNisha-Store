@@ -1,16 +1,29 @@
 import type { Metadata } from "next";
 
 import { MasonryGallery } from "@/components/gallery/masonry-gallery";
+import { galleryItems } from "@/data/gallery";
+import { getUploadedItems } from "@/lib/uploads";
 
 export const metadata: Metadata = {
   title: "Gallery",
   description: "Explore a premium masonry gallery of designer clothing collections."
 };
 
-export default function GalleryPage() {
+async function getAllItems() {
+  try {
+    const uploaded = await getUploadedItems();
+    return [...galleryItems, ...uploaded];
+  } catch {
+    return galleryItems;
+  }
+}
+
+export default async function GalleryPage() {
+  const allItems = await getAllItems();
+
   return (
     <main className="pt-24">
-      <MasonryGallery />
+      <MasonryGallery initialItems={allItems} />
     </main>
   );
 }

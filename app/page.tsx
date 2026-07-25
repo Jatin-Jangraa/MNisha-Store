@@ -7,22 +7,34 @@ import { ImageMarquee } from "@/components/image-marquee";
 import { LoadingScreen } from "@/components/loading-screen";
 import { SectionReveal } from "@/components/section-reveal";
 import { collections, galleryItems } from "@/data/gallery";
+import { getUploadedItems } from "@/lib/uploads";
+import type { GalleryItem } from "@/types/gallery";
+
+async function getAllItems(): Promise<GalleryItem[]> {
+  try {
+    const uploaded = await getUploadedItems();
+    return [...galleryItems, ...uploaded];
+  } catch {
+    return galleryItems;
+  }
+}
 
 export default async function HomePage() {
+  const allItems = await getAllItems();
 
   return (
     <main>
       <LoadingScreen />
-      <Hero />
+      <Hero items={allItems} />
 
-      <ImageMarquee />
+      <ImageMarquee items={allItems} />
 
       {/* Full-bleed editorial */}
       <section id="showcase" className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
-            src={galleryItems[2].image}
-            alt={galleryItems[2].alt}
+            src={allItems[2].image}
+            alt={allItems[2].alt}
             fill
             priority
             sizes="100vw"
@@ -31,13 +43,13 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
             <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-luxury-gold-lighter">
-              {galleryItems[2].category}
+              {allItems[2].category}
             </p>
             <h2 className="mt-3 font-serif text-4xl text-white md:text-6xl">
-              {galleryItems[2].collection}
+              {allItems[2].collection}
             </h2>
             <Link
-              href={`/gallery/${galleryItems[2].id}`}
+              href={`/gallery/${allItems[2].id}`}
               className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-luxury-gold-lighter"
             >
               View <ArrowRight className="h-3 w-3" />
@@ -46,9 +58,9 @@ export default async function HomePage() {
         </SectionReveal>
       </section>
 
-      {/* 3-image grid - all same height */}
+      {/* 3-image grid */}
       <section className="grid grid-cols-3 gap-1">
-        {[galleryItems[0], galleryItems[4], galleryItems[5]].map((item, i) => (
+        {[allItems[0], allItems[4], allItems[5]].map((item, i) => (
           <SectionReveal key={item.id} delay={i * 0.08}>
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
@@ -68,8 +80,8 @@ export default async function HomePage() {
       <section className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
-            src={galleryItems[6].image}
-            alt={galleryItems[6].alt}
+            src={allItems[6].image}
+            alt={allItems[6].alt}
             fill
             sizes="100vw"
             className="object-cover"
@@ -77,13 +89,13 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
             <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-luxury-gold-lighter">
-              {galleryItems[6].category}
+              {allItems[6].category}
             </p>
             <h2 className="mt-3 font-serif text-4xl text-white md:text-6xl">
-              {galleryItems[6].collection}
+              {allItems[6].collection}
             </h2>
             <Link
-              href={`/gallery/${galleryItems[6].id}`}
+              href={`/gallery/${allItems[6].id}`}
               className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-luxury-gold-lighter"
             >
               View <ArrowRight className="h-3 w-3" />
@@ -92,9 +104,9 @@ export default async function HomePage() {
         </SectionReveal>
       </section>
 
-      {/* 2-image grid - same height */}
+      {/* 2-image grid */}
       <section className="grid grid-cols-2 gap-1">
-        {[galleryItems[7], galleryItems[8]].map((item, i) => (
+        {[allItems[7], allItems[8]].map((item, i) => (
           <SectionReveal key={item.id} delay={i * 0.08}>
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
@@ -129,9 +141,9 @@ export default async function HomePage() {
         </SectionReveal>
       </section>
 
-      {/* 4-image grid - same height */}
+      {/* 4-image grid */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-1">
-        {[galleryItems[9], galleryItems[10], galleryItems[11], galleryItems[12]].map((item, i) => (
+        {[allItems[9], allItems[10], allItems[11], allItems[12]].map((item, i) => (
           <SectionReveal key={item.id} delay={i * 0.06}>
             <Link href={`/gallery/${item.id}`} className="group relative block aspect-[3/4] overflow-hidden">
               <Image
@@ -150,8 +162,8 @@ export default async function HomePage() {
       <section className="relative h-[70vh] md:h-[85vh]">
         <SectionReveal>
           <Image
-            src={galleryItems[13].image}
-            alt={galleryItems[13].alt}
+            src={allItems[13].image}
+            alt={allItems[13].alt}
             fill
             sizes="100vw"
             className="object-cover"
@@ -159,13 +171,13 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
             <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-luxury-gold-lighter">
-              {galleryItems[13].category}
+              {allItems[13].category}
             </p>
             <h2 className="mt-3 font-serif text-4xl text-white md:text-6xl">
-              {galleryItems[13].collection}
+              {allItems[13].collection}
             </h2>
             <Link
-              href={`/gallery/${galleryItems[13].id}`}
+              href={`/gallery/${allItems[13].id}`}
               className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-luxury-gold-lighter"
             >
               View <ArrowRight className="h-3 w-3" />
@@ -177,7 +189,7 @@ export default async function HomePage() {
       {/* Reverse image marquee */}
       <div className="overflow-hidden py-4">
         <div className="flex w-max animate-marquee-reverse gap-4">
-          {[...galleryItems.slice(8, 16), ...galleryItems.slice(8, 16)].map((item, index) => (
+          {[...allItems.slice(8, 16), ...allItems.slice(8, 16)].map((item, index) => (
             <div
               key={`${item.id}-rev-${index}`}
               className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl md:h-32 md:w-48"
@@ -194,7 +206,7 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Collection cards - all same aspect ratio */}
+      {/* Collection cards */}
       <section className="px-4 py-16 md:px-8 md:py-28">
         <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-6">
           {collections.map((collection, i) => (
@@ -223,7 +235,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Designer portraits - all same aspect ratio */}
+      {/* Designer portraits */}
       <section className="relative bg-secondary/30 py-16 md:py-24">
         <div className="container">
           <SectionReveal>
@@ -233,7 +245,7 @@ export default async function HomePage() {
             </div>
           </SectionReveal>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-            {[galleryItems[0], galleryItems[1], galleryItems[4], galleryItems[14]].map((item, i) => (
+            {[allItems[0], allItems[1], allItems[4], allItems[14]].map((item, i) => (
               <SectionReveal key={item.id} delay={i * 0.08}>
                 <Link
                   href={`/gallery/${item.id}`}
@@ -261,8 +273,8 @@ export default async function HomePage() {
       {/* Final CTA */}
       <section className="relative h-[70vh] md:h-[85vh]">
         <Image
-          src={galleryItems[15].image}
-          alt={galleryItems[15].alt}
+          src={allItems[15].image}
+          alt={allItems[15].alt}
           fill
           sizes="100vw"
           className="object-cover"

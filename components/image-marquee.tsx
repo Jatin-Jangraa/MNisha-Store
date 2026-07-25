@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { galleryItems } from "@/data/gallery";
+import type { GalleryItem } from "@/types/gallery";
 
-export function ImageMarquee() {
-  const images = galleryItems.slice(0, 8);
+export function ImageMarquee({ items }: { items: GalleryItem[] }) {
+  const images = items.slice(0, 8);
   const doubled = [...images, ...images];
 
   return (

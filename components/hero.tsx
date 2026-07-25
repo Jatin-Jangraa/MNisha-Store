@@ -5,11 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
-import { galleryItems } from "@/data/gallery";
+import type { GalleryItem } from "@/types/gallery";
 
-export function Hero() {
+export function Hero({ items }: { items: GalleryItem[] }) {
   const heroRef = useRef<HTMLDivElement>(null);
-  const allImages = galleryItems.slice(0, 8);
+  const allImages = items.slice(0, 8);
 
   useEffect(() => {
     let context: gsap.Context | undefined;
